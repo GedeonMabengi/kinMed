@@ -18,14 +18,14 @@ function NavigationLoader({ children }: { children: React.ReactNode }) {
         const finish = () => setLoading(false);
         const error = () => setLoading(false);
 
-        router.on('start', start);
-        router.on('finish', finish);
-        router.on('error', error);
+        const removeStart = router.on('start', start);
+        const removeFinish = router.on('finish', finish);
+        const removeError = router.on('error', error);
 
         return () => {
-            router.off('start', start);
-            router.off('finish', finish);
-            router.off('error', error);
+            removeStart();
+            removeFinish();
+            removeError();
         };
     }, []);
 
